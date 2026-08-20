@@ -6,7 +6,9 @@ A full-stack ESG (Environmental, Social, and Governance) web application designe
 
 Turn fragmented ESG data into explainable insights, risk alerts, recommendations, and sustainability decisions.
 
+![VerdeSight AI System Flowchart](./IMAGES/flowchart.png)
     
+
 ## ✨ Core Features
 
 <table> <tr> <td align="center">📥<br><b>Multi-Source Data</b><br><sub>PDF • CSV • Excel • Manual</sub></td> <td align="center">🧹<br><b>Data Validation</b><br><sub>Quality • Consistency • Provenance</sub></td> <td align="center">📊<br><b>ESG Scoring</b><br><sub>E • S • G Performance</sub></td> </tr>
@@ -14,6 +16,7 @@ Turn fragmented ESG data into explainable insights, risk alerts, recommendations
 <tr> <td align="center">🧠<br><b>ML Risk Prediction</b><br><sub>Risk Pattern Detection</sub></td> <td align="center">🔍<br><b>Explainable AI</b><br><sub>SHAP • LIME</sub></td> <td align="center">🎯<br><b>SDG Mapping</b><br><sub>ESG → SDGs</sub></td> </tr>
 
 <tr> <td align="center">🚨<br><b>Risk Monitoring</b><br><sub>Trends • Alerts</sub></td> <td align="center">💡<br><b>Recommendations</b><br><sub>Actionable Insights</sub></td> <td align="center">🤖<br><b>Ask ESG AI</b><br><sub>LLM Assistant</sub></td> </tr> </table>
+
 
 ## 🧩 Stack at a Glance
 
@@ -30,7 +33,28 @@ Turn fragmented ESG data into explainable insights, risk alerts, recommendations
 | 📦 Package Manager | pnpm |
 
 
+
+
 ## 🖥️ Project Preview
+
+### 📊Dashboard
+
+![ESG Recommendations](./IMAGES/image1%20(4).png)
+
+
+### 🔍ESG Analysis
+![VerdeSight AI Dashboard](./IMAGES/image1%20(1).png)
+
+### 📈ESG Results 
+
+![ESG Analysis](./IMAGES/image1%20(2).png)
+
+
+
+### 💡ESG Recommendations
+![ESG Results](./IMAGES/image1%20(3).png)
+
+
 
 
 ## 📁 Project Structure
@@ -88,6 +112,8 @@ ESG website/
 ├── pnpm-workspace.yaml
 ```
 
+
+
 ## 🚀 Run Locally
 
 Clone the repository
@@ -119,19 +145,20 @@ http://localhost:3100/0
 
 
 ---
-### 👩‍💻 Authors
 
-Shruti Sunil Borde
+## 👩‍💻 Authors
 
-Lakshita Nikhil Babbilwar
+**1. Shruti Sunil Borde**  
+**2. Lakshita Nikhil Babbilwar**  
+**3. Gaurav Ashok Kene**  
+**4. Udayshankar Sajith**
 
-Gaurav Ashok Kene
+### 🎓 Affiliation
 
-Udayshankar Sajith
+**Department of Computer Science & Engineering**  
+**(Artificial Intelligence & Machine Learning)**
 
-CSE (Artificial Intelligence & Machine Learning)
-
-Lokmanya Tilak College of Engineering
-Kopar Khairane, Navi Mumbai, India
+**Lokmanya Tilak College of Engineering**  
+Kopar Khairane, Navi Mumbai, Maharashtra, India
 
 ---
