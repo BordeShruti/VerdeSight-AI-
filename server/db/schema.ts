@@ -1,0 +1,192 @@
+import { sql } from "drizzle-orm";
+import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+
+export const user = sqliteTable("user", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull().unique(),
+  emailVerified: integer("emailVerified", { mode: "boolean" }).notNull().default(false),
+  image: text("image"),
+  createdAt: integer("createdAt", { mode: "timestamp" }).notNull(),
+  updatedAt: integer("updatedAt", { mode: "timestamp" }).notNull(),
+  role: text("role").default("user"),
+  username: text("username").unique(),
+  displayUsername: text("displayUsername")
+});
+
+export const session = sqliteTable("session", {
+  id: text("id").primaryKey(),
+  expiresAt: integer("expiresAt", { mode: "timestamp" }).notNull(),
+  token: text("token").notNull().unique(),
+  createdAt: integer("createdAt", { mode: "timestamp" }).notNull(),
+  updatedAt: integer("updatedAt", { mode: "timestamp" }).notNull(),
+  ipAddress: text("ipAddress"),
+  userAgent: text("userAgent"),
+  userId: text("userId")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" })
+});
+
+export const account = sqliteTable("account", {
+  id: text("id").primaryKey(),
+  accountId: text("accountId").notNull(),
+  providerId: text("providerId").notNull(),
+  userId: text("userId")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  accessToken: text("accessToken"),
+  refreshToken: text("refreshToken"),
+  idToken: text("idToken"),
+  accessTokenExpiresAt: integer("accessTokenExpiresAt", { mode: "timestamp" }),
+  refreshTokenExpiresAt: integer("refreshTokenExpiresAt", { mode: "timestamp" }),
+  scope: text("scope"),
+  password: text("password"),
+  createdAt: integer("createdAt", { mode: "timestamp" }).notNull(),
+  updatedAt: integer("updatedAt", { mode: "timestamp" }).notNull()
+});
+
+export const verification = sqliteTable("verification", {
+  id: text("id").primaryKey(),
+  identifier: text("identifier").notNull(),
+  value: text("value").notNull(),
+  expiresAt: integer("expiresAt", { mode: "timestamp" }).notNull(),
+  createdAt: integer("createdAt", { mode: "timestamp" }),
+  updatedAt: integer("updatedAt", { mode: "timestamp" })
+});
+
+export const todos = sqliteTable(
+  "todos",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("userId").notNull(),
+    title: text("title").notNull(),
+    done: integer("done", { mode: "boolean" }).notNull().default(false),
+    createdAt: text("createdAt").notNull().default(sql`CURRENT_TIMESTAMP`),
+    updatedAt: text("updatedAt").notNull().default(sql`CURRENT_TIMESTAMP`)
+  },
+  (table) => [index("idx_todos_userId").on(table.userId)]
+);
+
+export const storageFiles = sqliteTable(
+  "storage_files",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("userId"),
+    gatewayFileId: text("gatewayFileId"),
+    fileName: text("fileName").notNull(),
+    fileSuffix: text("fileSuffix").notNull(),
+    contentType: text("contentType").notNull().default("application/octet-stream"),
+    fileSize: integer("fileSize").notNull(),
+    objectKey: text("objectKey").notNull(),
+    path: text("path").notNull(),
+    downloadUrl: text("downloadUrl").notNull(),
+    status: text("status", { enum: ["pending", "uploaded", "failed", "deleted"] }).notNull().default("pending"),
+    errorMessage: text("errorMessage"),
+    createdAt: text("createdAt").notNull().default(sql`CURRENT_TIMESTAMP`),
+    updatedAt: text("updatedAt").notNull().default(sql`CURRENT_TIMESTAMP`)
+  },
+  (table) => [
+    index("idx_storage_files_userId").on(table.userId),
+    index("idx_storage_files_objectKey").on(table.objectKey),
+    index("idx_storage_files_status").on(table.status)
+  ]
+);
+
+export const aiBusinessScenes = sqliteTable(
+  "ai_business_scenes",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    sceneKey: text("scene_key").notNull().unique(),
+    name: text("name").notNull(),
+    description: text("description"),
+    definition: text("definition").notNull().default("{}"),
+    createdAt: text("createdAt").notNull().default(sql`CURRENT_TIMESTAMP`),
+    updatedAt: text("updatedAt").notNull().default(sql`CURRENT_TIMESTAMP`)
+  },
+  (table) => [index("idx_ai_business_scenes_scene_key").on(table.sceneKey)]
+);
+
+export const companyProfiles = sqliteTable(
+  "company_profiles",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("userId").notNull().unique(),
+    name: text("name").notNull(),
+    industry: text("industry").notNull(),
+    sector: text("sector").notNull(),
+    size: text("size").notNull(),
+    country: text("country").notNull(),
+    employeeCount: integer("employeeCount").notNull().default(0),
+    reportingYear: integer("reportingYear").notNull(),
+    reportingStandard: text("reportingStandard").notNull().default("GRI + IFRS S1/S2"),
+    createdAt: text("createdAt").notNull().default(sql`CURRENT_TIMESTAMP`),
+    updatedAt: text("updatedAt").notNull().default(sql`CURRENT_TIMESTAMP`)
+  },
+  (table) => [index("idx_company_profiles_userId").on(table.userId)]
+);
+
+export const esgSnapshots = sqliteTable(
+  "esg_snapshots",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("userId").notNull(),
+    reportingPeriod: text("reportingPeriod").notNull(),
+    environmentalScore: integer("environmentalScore").notNull(),
+    socialScore: integer("socialScore").notNull(),
+    governanceScore: integer("governanceScore").notNull(),
+    overallScore: integer("overallScore").notNull(),
+    riskLevel: text("riskLevel", { enum: ["low", "medium", "high"] }).notNull(),
+    confidence: integer("confidence").notNull().default(0),
+    metricsJson: text("metricsJson").notNull().default("{}"),
+    createdAt: text("createdAt").notNull().default(sql`CURRENT_TIMESTAMP`)
+  },
+  (table) => [
+    index("idx_esg_snapshots_userId").on(table.userId),
+    index("idx_esg_snapshots_period").on(table.reportingPeriod)
+  ]
+);
+
+export const esgDocuments = sqliteTable(
+  "esg_documents",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("userId").notNull(),
+    storageFileId: text("storageFileId"),
+    fileName: text("fileName").notNull(),
+    fileType: text("fileType").notNull(),
+    processingStatus: text("processingStatus", {
+      enum: ["queued", "processing", "ready", "failed"]
+    })
+      .notNull()
+      .default("queued"),
+    sourceReliability: integer("sourceReliability").notNull().default(70),
+    extractedClaimCount: integer("extractedClaimCount").notNull().default(0),
+    createdAt: text("createdAt").notNull().default(sql`CURRENT_TIMESTAMP`)
+  },
+  (table) => [index("idx_esg_documents_userId").on(table.userId)]
+);
+
+export type Todo = typeof todos.$inferSelect;
+export type NewTodo = typeof todos.$inferInsert;
+export type StorageFile = typeof storageFiles.$inferSelect;
+export type NewStorageFile = typeof storageFiles.$inferInsert;
+export type AiBusinessScene = typeof aiBusinessScenes.$inferSelect;
+export type NewAiBusinessScene = typeof aiBusinessScenes.$inferInsert;
+export type CompanyProfile = typeof companyProfiles.$inferSelect;
+export type NewCompanyProfile = typeof companyProfiles.$inferInsert;
+export type EsgSnapshot = typeof esgSnapshots.$inferSelect;
+export type NewEsgSnapshot = typeof esgSnapshots.$inferInsert;
+export type EsgDocument = typeof esgDocuments.$inferSelect;
+export type NewEsgDocument = typeof esgDocuments.$inferInsert;
