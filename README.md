@@ -126,6 +126,8 @@ Project-Name/
     ├── client/
     └── server/
 
+```
+
 The client and server folders must be inside the app folder
 
 Clone the repository
