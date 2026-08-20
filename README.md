@@ -121,11 +121,10 @@ ESG website/
 Make sure the project has the following structure:
 
 ```text
-Project-Name/
+ESG website/
 └── app/
     ├── client/
     └── server/
-
 ```
 
 The client and server folders must be inside the app folder
