@@ -116,6 +116,17 @@ ESG website/
 
 ## 🚀 Run Locally
 
+📁 Project Structure
+
+Make sure the project has the following structure:
+
+Project/
+└── app/
+    ├── client/
+    └── server/
+
+The client and server folders must be inside the app folder
+
 Clone the repository
 ```text
 git clone <YOUR-GITHUB-REPOSITORY-URL>
