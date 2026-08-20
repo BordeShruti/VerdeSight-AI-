@@ -6,7 +6,7 @@ A full-stack ESG (Environmental, Social, and Governance) web application designe
 
 Turn fragmented ESG data into explainable insights, risk alerts, recommendations, and sustainability decisions.
 
-![VerdeSight AI System Flowchart](./IMAGES/flowchart.png)
+![VerdeSight AI System Flowchart](./IMAGES/FLOWCHART1.png)
     
 
 ## ✨ Core Features
