@@ -120,7 +120,8 @@ ESG website/
 
 Make sure the project has the following structure:
 
-Project/
+```text
+Project-Name/
 └── app/
     ├── client/
     └── server/
