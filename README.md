@@ -131,7 +131,7 @@ The client and server folders must be inside the app folder
 
 Clone the repository
 ```text
-git clone <YOUR-GITHUB-REPOSITORY-URL>
+git clone https://github.com/BordeShruti/VerdeSight-AI.git
 ```
 Navigate to the project
 ```
